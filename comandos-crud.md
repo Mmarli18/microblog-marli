@@ -37,6 +37,7 @@ SELECT nome, email FROM usuarios;
 SELECT nome, email FROM usuarios WHERE tipo = 'admin';
 ```
 
+# asteristicos * seleciona toda a linha
 ```sql
 SELECT * FROM usuarios WHERE id > 1;
 ```

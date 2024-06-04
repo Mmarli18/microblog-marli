@@ -21,7 +21,7 @@ FROM usuarios ORDER BY nome";
 $resultado = mysqli_query($conexao,$sql) 
 or die(mysqli_error($conexao));
 
-// Retornamos o resultado transformado em array associativo
+// Retornamos o resultado transformado em array associativo com todos os usuarios
 return mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 }
 

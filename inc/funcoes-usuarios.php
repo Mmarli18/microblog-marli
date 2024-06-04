@@ -14,7 +14,8 @@ function inserirUsuario($conexao, $nome, $email, $tipo, $senha){
 
 
 function lerUsuario($conexao){
-$sql = "SELECT id, nome, tipo, email FROM usuarios";
+$sql = "SELECT id, nome, tipo, email 
+FROM usuarios ORDER BY nome";
 
 // Execução do comando e armazenamento do resultado
 $resultado = mysqli_query($conexao,$sql) 
@@ -22,5 +23,15 @@ or die(mysqli_error($conexao));
 
 // Retornamos o resultado transformado em array associativo
 return mysqli_fetch_all($resultado, MYSQLI_ASSOC);
-
 }
+
+function lerUmUsuario($conexao, $id){
+  $sql = "SELECT * FROM usuarios WHERE id = $id";
+  $resultado = mysqli_query($conexao,$sql)
+  or die(mysqli_error($conexao));
+
+  // assoc Retorna apenas um array associativo com os dados de apenas um usuário
+  return mysqli_fetch_assoc($resultado);
+}
+
+

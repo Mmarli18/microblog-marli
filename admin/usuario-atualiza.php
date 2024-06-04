@@ -7,7 +7,6 @@ $id = $_GET['id'];
 
 $dadosUsuario = lerUmUsuario($conexao, $id);
 ?>
-<pre><?=var_dump($dadosUsuario)?></pre>
 
 
 <div class="row">
@@ -21,12 +20,12 @@ $dadosUsuario = lerUmUsuario($conexao, $id);
 
 			<div class="mb-3">
 				<label class="form-label" for="nome">Nome:</label>
-				<input class="form-control" type="text" id="nome" name="nome" required>
+				<input value="<?=$dadosUsuario['nome']?>" class="form-control" type="text" id="nome" name="nome" required>
 			</div>
 
 			<div class="mb-3">
 				<label class="form-label" for="email">E-mail:</label>
-				<input class="form-control" type="email" id="email" name="email" required>
+				<input value="<?=$dadosUsuario['email']?>" class="form-control" type="email" id="email" name="email" required>
 			</div>
 
 			<div class="mb-3">
@@ -38,8 +37,9 @@ $dadosUsuario = lerUmUsuario($conexao, $id);
 				<label class="form-label" for="tipo">Tipo:</label>
 				<select class="form-select" name="tipo" id="tipo" required>
 					<option value=""></option>
-					<option value="editor">Editor</option>
-					<option value="admin">Administrador</option>
+					<option <?php if($dadosUsuario['tipo'] == 'editor') echo 'selected' ?> value="editor">Editor</option>
+
+					<option <?php if($dadosUsuario['tipo'] == 'admin') echo 'selected' ?> value="admin">Administrador</option>
 				</select>
 			</div>
 			

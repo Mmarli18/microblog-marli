@@ -6,6 +6,29 @@ require_once "../inc/funcoes-usuarios.php";
 $id = $_GET['id'];
 
 $dadosUsuario = lerUmUsuario($conexao, $id);
+
+if(isset($_POST['atualizar'])){
+	$nome = $_POST['nome'];
+	$email = $_POST['email'];
+	$tipo = $_POST['tipo'];
+/* Logica para tratamento da senha. Se o campo da senha estiver vazio OU se a senha digitada for a mesma já existente no banco, então significa que o usuario NÃO ALTEROU a senha. Portanto, devemos manter a senha existente no banco. */
+if(empty($_POST['senha']) || password_verify($_POST['senha'], $dadosUsuario['senha']) ){
+
+	// Manter a mesma senha (copiamos ela para uma variavel)
+	$senha = $dadosUsuario['senha'];
+
+} else {
+
+/* Caso contrario, pegaremos a senha nova digitada e a CODIFICAREMOS ANTES  de mandar/salvar no banco */
+	$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+}
+// Chamamos/executamos o UPDATE através da função
+atualizarUsuario($conexao, $id, $nome, $email, $senha, $tipo);
+
+// Redirecionamos para a página que mostra todos os usuários
+header("location:usuarios.php");
+
+}
 ?>
 
 

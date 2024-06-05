@@ -6,9 +6,9 @@ require_once "inc/funcoes-usuarios.php";
 /* Mensagens de feedback */
 
 if(isset($_GET['campos_obrigatorios'])){
-	$mensagem = "Preencha e-mail e senha";
+	$mensagem = "Preencha o e-mail e senha";
 } elseif(isset($_GET['dados_incorretos'])){
-	$mensagem = "Dados incorretos, verifique e tente novamente";
+	$mensagem = "Dados incorretos, tente novamente";
 } elseif(isset($_GET['saiu'])){
 	$mensagem = "Você saiu do sistema, até breve";
 } elseif(isset($_GET['acesso_negado'])){
@@ -52,8 +52,8 @@ if (isset($_POST['entrar'])) {
     <h2 class="text-center fw-light">Acesso à área administrativa</h2>
 
         <form action="" method="post" id="form-login" name="form-login" class="mx-auto w-50" autocomplete="off">
-			
-				<?php if() { ?>	
+
+				<?php if(isset($mensagem)) { ?>	
 				<p class="my-2 alert alert-warning text-center">
 					<?=$mensagem?>
 				</p>                

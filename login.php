@@ -3,6 +3,19 @@ require_once "inc/cabecalho.php";
 require_once "inc/funcoes-sessao.php";
 require_once "inc/funcoes-usuarios.php";
 
+/* Mensagens de feedback */
+
+if(isset($_GET['campos_obrigatorios'])){
+	$mensagem = "Preencha e-mail e senha";
+} elseif(isset($_GET['dados_incorretos'])){
+	$mensagem = "Dados incorretos, verifique e tente novamente";
+} elseif(isset($_GET['saiu'])){
+	$mensagem = "Você saiu do sistema, até breve";
+} elseif(isset($_GET['acesso_negado'])){
+	$mensagem = "Você deve logar primeiro";
+}
+
+
 if (isset($_POST['entrar'])) {
 	// Validando os campos
 	if(empty($_POST['email']) || empty($_POST['senha'])){

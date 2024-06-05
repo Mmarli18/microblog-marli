@@ -17,5 +17,5 @@ mysqli_set_charset($conexao, "utf8");
 if (!$conexao) {
     die("Problema encontrado:" .mysqli_connect_error());
 } else {
-    echo "Tudo certo, conectado... ";
+    
 }

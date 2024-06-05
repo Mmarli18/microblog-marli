@@ -18,9 +18,19 @@ if (isset($_POST['entrar'])) {
 
 	$usuario = buscarUsuario($conexao, $email);
 
-	echo "<pre>",
-	var_dump($usuario);
-	echo "</pre>";
+	// 2) Verificando usuario e senha, Se o usuario/email existe no banco e a senha digitada for igual a do banco...
+
+	if ($usuario !== null && password_verify($senha, $usuario['senha'])) {
+		// ... então inicie o processo de login.
+		login($usuario['id'], $usuario['nome'], $usuario['tipo']);
+
+		// Redirecione para a index admin
+		header("location:admin/index.php");
+
+	} else {
+		header("location:login.php?dados_incorretos");
+		exit;
+	}
 }
 ?>
 

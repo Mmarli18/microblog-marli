@@ -1,6 +1,10 @@
 <?php 
 require_once "../inc/cabecalho-admin.php";
 // Aqui estamos importando as funções de manipulação de usuários
+
+// Verificando se o usuario pode(tem nivel) acessar essa pagina
+verificaNivel();
+
 require_once "../inc/funcoes-usuarios.php";
 
 // Detectando se o botão inserir foi acionado

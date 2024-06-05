@@ -1,5 +1,9 @@
 <?php 
 require_once "../inc/cabecalho-admin.php";
+
+// Verificando se o usuario pode(tem nivel) acessar essa pagina
+verificaNivel();
+
 require_once "../inc/funcoes-usuarios.php";
 
 // Pegando o valor do parâmetro id vindo da url

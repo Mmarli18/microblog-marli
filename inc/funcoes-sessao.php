@@ -28,3 +28,16 @@ function verificaAcesso(){
         exit; //ou die()  
     }
 }
+
+function login($id, $nome, $tipo){
+//  variaveis de sessão
+    $_SESSION['id'] = $id;
+    $_SESSION['nome'] = $nome;
+    $_SESSION['tipo'] = $tipo;
+}
+
+function logout(){
+    session_destroy();
+    header("location:../login.php");
+    exit;
+}

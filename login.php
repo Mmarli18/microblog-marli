@@ -52,10 +52,12 @@ if (isset($_POST['entrar'])) {
     <h2 class="text-center fw-light">Acesso à área administrativa</h2>
 
         <form action="" method="post" id="form-login" name="form-login" class="mx-auto w-50" autocomplete="off">
-
+			
+				<?php if() { ?>	
 				<p class="my-2 alert alert-warning text-center">
-					Mensagens de feedback...
+					<?=$mensagem?>
 				</p>                
+					<?php } ?>
 
 				<div class="mb-3">
 					<label for="email" class="form-label">E-mail:</label>

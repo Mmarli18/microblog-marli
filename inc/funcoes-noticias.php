@@ -69,10 +69,54 @@ function lerNoticias($conexao, $idUsuario, $tipoUsuario)
 
 
 
-function lerUmaNoticia($conexao)
+function lerUmaNoticia($conexao, $idNoticia, $idUsuario, $tipoUsuario)
 {
+    if ($tipoUsuario == 'admin') {
+        // Se o tipo de usuario for admin pode ver todas as noticias
+        $sql = " SELECT * FROM noticias 
+        WHERE id = $idNoticia";
+    } else {
+        // Se for editor vai poder ver somente suas noticias (basta saber qual noticia e qual usuario)
+        $sql = "SELECT * FROM noticias 
+        WHERE id = $idNoticia AND usuario_id = $idUsuario";
+    }
+    $resultado = mysqli_query($conexao, $sql)
+        or die(mysqli_error($conexao));
+
+    // Retornando um ARRAY com os dados da noticia escolhida
+    return mysqli_fetch_assoc($resultado);
 }
 
-function excluirNoticia($conexao)
+
+
+
+
+function atualizarNoticia($conexao, $titulo, $texto, $resumo, $imagem, $idNoticia, $idUsuario, $tipoUsuario)
 {
+    if ($tipoUsuario == 'admin') {
+        // Pode atualizar QUALQUER noticia (basta saber qual)
+        $sql = "UPDATE noticias SET titulo = '$titulo',
+        texto = '$texto',
+        resumo = '$resumo',
+        imagem = '$imagem'
+        WHERE id = $idNoticia";
+    } else {
+        /* Pode atualizar SOMENTE suas proprias noticias
+        (basta saber qual noticia e qual usuario) */
+        $sql = "UPDATE noticias SET 
+        titulo = '$titulo',
+        texto = '$texto',
+        resumo = '$resumo',
+        imagem = '$imagem'
+        WHERE id = $idNoticia AND usuario_id = $idUsuario";
+    }
+
+    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+}
+
+
+
+
+
+function excluirNoticia($conexao){
 }

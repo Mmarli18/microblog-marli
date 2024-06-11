@@ -1,8 +1,10 @@
 <?php
 
 require "conecta.php";
-function formataData($data){
-    return date("d/m/Y H:i", strtotime($data));}
+function formataData($data)
+{
+    return date("d/m/Y H:i", strtotime($data));
+}
 
 function upload($arquivo)
 {
@@ -41,14 +43,22 @@ function inserirNoticia($conexao, $titulo, $texto, $resumo, $nomeImagem, $usuari
 
 function lerNoticias($conexao, $idUsuario, $tipoUsuario)
 {
-    $sql = "SELECT 
- noticias.id, 
- noticias.titulo, 
- noticias.data, 
- usuarios.nome 
- FROM noticias JOIN usuarios
- ON noticias.usuario_id = usuarios.id 
- ORDER BY data DESC";
+    if ($tipoUsuario == 'admin') {
+        // Se o usuario for admin pode ver tudo 
+        $sql = "SELECT 
+        noticias.id, 
+        noticias.titulo, 
+        noticias.data, 
+        usuarios.nome 
+        FROM noticias JOIN usuarios
+        ON noticias.usuario_id = usuarios.id 
+        ORDER BY data DESC";
+
+        // caso contrário (editor) pode ver apenas as noticias dela
+    } else {
+        $sql = "SELECT titulo, data, id FROM noticias
+        WHERE usuario_id = $idUsuario ORDER BY data DESC";
+    }
 
     $resultado = mysqli_query($conexao, $sql)
         or die(mysqli_error($conexao));
@@ -66,7 +76,3 @@ function lerUmaNoticia($conexao)
 function excluirNoticia($conexao)
 {
 }
-
-
-
-

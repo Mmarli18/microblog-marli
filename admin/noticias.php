@@ -11,7 +11,6 @@ $tipoUsuario = $_SESSION['tipo'];
 // Chama a função, passando os parâmetros, e recebendo os dados
 $listaDeNoticias = lerNoticias($conexao, $idUsuario, $tipoUsuario);
 
-
 ?>
 
 

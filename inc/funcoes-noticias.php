@@ -132,12 +132,13 @@ function excluirNoticia($conexao, $idNoticia, $idUsuario, $tipoUsuario)
 /* Funções usadas nas páginas PÚBLICAS do Microblog: index, noticia, resultados */
 
 // index.php
-function lerTodasNoticias($conexao){
+function lerTodasNoticias($conexao)
+{
     $sql = "SELECT titulo, imagem, resumo, id
     FROM noticias ORDER BY data DESC";
 
-    $resultado = mysqli_query($conexao,$sql)
-    or die(mysqli_error($conexao));
+    $resultado = mysqli_query($conexao, $sql)
+        or die(mysqli_error($conexao));
 
     return mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 }
@@ -145,9 +146,43 @@ function lerTodasNoticias($conexao){
 
 
 // noticia.php
-function lerNoticiaCompleta($conexao){}
+function lerNoticiaCompleta($conexao, $id)
+{
+    $sql = "SELECT 
+    noticias.id,
+    noticias.titulo, 
+    noticias.data, 
+    noticias.imagem, 
+    noticias.texto,
+    usuarios.nome 
+    FROM noticias JOIN usuarios
+    ON noticias.usuario_id = usuarios.id
+    WHERE noticias.id = $id";
+
+    $resultado = mysqli_query($conexao, $sql)
+    or die(mysqli_error($conexao));
+
+    return mysqli_fetch_assoc($resultado);
+}
+
 
 
 
 // resultados.php
-function busca($conexao){}
+function busca($conexao, $termoDigitado){
+
+    /* Atenção ao uso do operador LIKE em vez do igual e do operador curinga % 
+    Ambos são necessarios para que a busca seja mais abrangente, permitindo que o termo esteja em qualquer lugar dentro das colunas.
+*/
+$sql = "SELECT id, data, titulo, resumo FROM noticias
+WHERE 
+titulo LIKE '%$termoDigitado%' OR 
+resumo LIKE '%$termoDigitado%'OR
+texto LIKE '%$termoDigitado%' 
+ORDER BY data DESC";
+
+$resultado = mysqli_query($conexao, $sql)
+or die (mysqli_error($conexao));
+
+return mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+}

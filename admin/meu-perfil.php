@@ -10,17 +10,6 @@ $idUsuario = $_SESSION['id'];
 
 
 /* 3) Chame a função lerUmUsuario e guarde o que ela retorna (array de dados) */
-
-$dadosUsuario = lerUsuario($conexao, $idUsuario);
-
-if(isset($_POST['atualizar'])){
-	$nome = $_POST['nome'];
-	$email = $_POST['email'];
-	$tipo = $_POST['tipo'];
-}
-
-
-
 /* 4) Programe uma condicional para detectar se o formulário de atualização foi acionado.    
 4.1) Capture os dados digitados no formulário (nome, e-mail)    
 4.2) Capture o tipo do usuário através da SESSÃO    
@@ -28,6 +17,26 @@ if(isset($_POST['atualizar'])){
 4.4) Fora da condicional da senha, chame a função atualizarUsuario e passe os dados pra ela    
 4.5) Redirecione para a página index.php (a que está dentro de admin) */
 /* 5) DESAFIO: faça com que, ao mudar o nome do usuário, automaticamente apareça o novo nome na index.php */
+
+$dadosUsuario = lerUmUsuario($conexao, $idUsuario);
+
+if(isset($_POST['atualizar'])){
+	$nome = $_POST['nome'];
+	$email = $_POST['email'];
+    $tipo = $_SESSION['tipo'];
+
+if( empty($_POST['senha']) || 
+password_verify($_POST['senha']),
+$dadosUsuario(['senha']) ){
+	$senha = $dadosUsuario['senha'];
+} else { 
+	$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+	}
+	
+	atualizarUsuario($conexao, $id, $nome, $email, $senha, $tipo);
+	$_SESSION['nome'] = $nome;
+	header("location:index.php");
+}
 ?>
 
 
@@ -42,12 +51,12 @@ if(isset($_POST['atualizar'])){
 
 			<div class="mb-3">
 				<label class="form-label" for="nome">Nome:</label>
-				<input class="form-control" type="text" id="nome" name="nome" required>
+				<input value="<?=$dadosUsuario['nome']?>" class="form-control" type="text" id="nome" name="nome" required>
 			</div>
 
 			<div class="mb-3">
 				<label class="form-label" for="email">E-mail:</label>
-				<input class="form-control" type="email" id="email" name="email" required>
+				<input value="<?=$dadosUsuario['email']?>" class="form-control" type="email" id="email" name="email" required>
 			</div>
 
 			<div class="mb-3">

@@ -7,7 +7,7 @@ verificaNivel();
 require_once "../inc/funcoes-usuarios.php";
 
 // Pegando o valor do parâmetro id vindo da url
-$id = $_GET['id'];
+$id = (int)$_GET['id'];
 
 $dadosUsuario = lerUmUsuario($conexao, $id);
 

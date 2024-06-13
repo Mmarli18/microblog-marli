@@ -8,7 +8,7 @@ verificaAcesso();
 verificaNivel();
 
 
-$id = $_GET['id'];
+$id = (int)$_GET['id'];
 
 excluirUsuario($conexao, $id);
 

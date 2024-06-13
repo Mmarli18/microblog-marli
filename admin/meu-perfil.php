@@ -5,7 +5,7 @@ require_once "../inc/funcoes-usuarios.php";
 /* 2) Pegue o ID do usuário através da SESSÃO */
 
 verificaAcesso();
-$idUsuario = $_SESSION['id'];
+$id = $_SESSION['id'];
 
 /* 3) Chame a função lerUmUsuario e guarde o que ela retorna (array de dados) */
 /* 4) Programe uma condicional para detectar se o formulário de atualização foi acionado.    
@@ -16,22 +16,25 @@ $idUsuario = $_SESSION['id'];
 4.5) Redirecione para a página index.php (a que está dentro de admin) */
 /* 5) DESAFIO: faça com que, ao mudar o nome do usuário, automaticamente apareça o novo nome na index.php */
 
-$dadosUsuario = lerUmUsuario($conexao, $idUsuario);
+$dadosUsuario = lerUmUsuario($conexao, $id);
 
 if (isset($_POST['atualizar'])) {
 	$nome = $_POST['nome'];
 	$email = $_POST['email'];
 	$tipo = $_SESSION['tipo'];
 
+	// Mesmo código utilizado na pagina usuario-atualiza
 	if (empty($_POST['senha']) || password_verify($_POST['senha'], $dadosUsuario['senha'])) {
 	} else {
 		$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 	}
 
+	// Chamando a função Atualizar dados e redirecionando para index
 	atualizarUsuario($conexao, $id, $nome, $email, $senha, $tipo);
-	$_SESSION['nome'] = $nome;
 	header("location:index.php");
+	$_SESSION['nome'] = $nome;
 }
+
 ?>
 
 

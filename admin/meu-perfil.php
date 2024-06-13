@@ -14,7 +14,7 @@ $id = $_SESSION['id'];
 4.3) Faça a programação condicional necessária para a senha (é o mesmo código usado em usuario-atualiza.php)    
 4.4) Fora da condicional da senha, chame a função atualizarUsuario e passe os dados pra ela    
 4.5) Redirecione para a página index.php (a que está dentro de admin) */
-/* 5) DESAFIO: faça com que, ao mudar o nome do usuário, automaticamente apareça o novo nome na index.php */
+
 
 $dadosUsuario = lerUmUsuario($conexao, $id);
 
@@ -23,15 +23,18 @@ if (isset($_POST['atualizar'])) {
 	$email = $_POST['email'];
 	$tipo = $_SESSION['tipo'];
 
-	// Mesmo código utilizado na pagina usuario-atualiza
+	// Mesmo código utilizado na pagina usuario atualiza
 	if (empty($_POST['senha']) || password_verify($_POST['senha'], $dadosUsuario['senha'])) {
 	} else {
 		$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 	}
 
-	// Chamando a função Atualizar dados e redirecionando para index
+	// Chamando a função Atualizar dados
 	atualizarUsuario($conexao, $id, $nome, $email, $senha, $tipo);
+	
+	// redirecionando para página index
 	header("location:index.php");
+	
 	$_SESSION['nome'] = $nome;
 }
 
